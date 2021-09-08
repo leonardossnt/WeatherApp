@@ -4,4 +4,5 @@ import com.eldorado.weatherapp.network.WeatherApi
 
 class WeatherRepository constructor(private val weatherApi: WeatherApi) {
     fun getWeatherByLocationName(name : String) = weatherApi.getWeatherByLocationName(name)
+    fun getForecastByLocationName(name : String) = weatherApi.getForecastByLocationName(name)
 }

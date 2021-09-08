@@ -12,6 +12,6 @@ data class CurrentWeather(
     val sys: Sys,
 //    val timezone: Int,
 //    val visibility: Int,
-    val weather: List<Weather>,
-    val wind: Wind
+    val weather: List<Weather>
+//    val wind: Wind
 )
