@@ -46,6 +46,6 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "Erro!", Toast.LENGTH_SHORT).show()
         })
 
-        viewModel.getWeatherByLocationName("Londres");
+        viewModel.getWeatherByLocationName("Manaus");
     }
 }
