@@ -2,11 +2,13 @@ package com.eldorado.weatherapp.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.eldorado.weatherapp.R
+import com.eldorado.weatherapp.databinding.ActivityMainBinding
+import com.eldorado.weatherapp.model.toWeatherView
 import com.eldorado.weatherapp.network.WeatherApi
 import com.eldorado.weatherapp.repository.WeatherRepository
 import com.eldorado.weatherapp.viewmodel.MainViewModel
@@ -14,7 +16,9 @@ import com.eldorado.weatherapp.viewmodel.MainViewModelFactory
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var viewModel : MainViewModel
+    private lateinit var viewModel : MainViewModel
+
+    private lateinit var dataBinding : ActivityMainBinding
 
     private val weatherApi = WeatherApi.getInstance()
 
@@ -22,14 +26,16 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        supportActionBar?.hide()
+        dataBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
         viewModel = ViewModelProvider(this, MainViewModelFactory(WeatherRepository(weatherApi))).get(MainViewModel::class.java)
 
         viewModel.weather.observe(this, Observer {
-            Log.d(TAG, "Current weather => ${it}")
-            Toast.makeText(this, "Actual Temperature: ${it.main.temp} ºC", Toast.LENGTH_SHORT).show()
-            Log.d(TAG, "Deu bom! ${it.main.temp}")
+            val weatherView = it.toWeatherView()
+            dataBinding.weatherView = weatherView
+
+            Toast.makeText(this, "Weather updated", Toast.LENGTH_SHORT).show()
         })
 
         viewModel.error.observe(this, Observer {
