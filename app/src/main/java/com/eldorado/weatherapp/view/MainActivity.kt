@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import coil.load
 import com.eldorado.weatherapp.R
 import com.eldorado.weatherapp.databinding.ActivityMainBinding
 import com.eldorado.weatherapp.model.toWeatherView
@@ -34,6 +35,9 @@ class MainActivity : AppCompatActivity() {
         viewModel.weather.observe(this, Observer {
             val weatherView = it.toWeatherView()
             dataBinding.weatherView = weatherView
+            dataBinding.iconMainWeather.load(weatherView.iconUrl) {
+                crossfade(true)
+            }
 
             Toast.makeText(this, "Weather updated", Toast.LENGTH_SHORT).show()
         })
@@ -42,6 +46,6 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "Erro!", Toast.LENGTH_SHORT).show()
         })
 
-        viewModel.getWeatherByLocationName("Manaus");
+        viewModel.getWeatherByLocationName("Londres");
     }
 }
