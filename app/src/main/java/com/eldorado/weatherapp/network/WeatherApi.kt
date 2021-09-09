@@ -1,7 +1,6 @@
 package com.eldorado.weatherapp.network
 
 import com.eldorado.weatherapp.model.CurrentWeather
-import com.eldorado.weatherapp.model.Forecast
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -16,14 +15,6 @@ interface WeatherApi {
         @Query("units") units : String = "metric",
         @Query("APPID", encoded = true) appId : String = "a0a1ee26bf5c5d99184399a7abba5ec1"
     ) : Call<CurrentWeather>
-
-    @GET("data/2.5/forecast")
-    fun getForecastByLocationName(
-        @Query("q") name : String,
-        @Query("lang") language : String = "pt_br",
-        @Query("units") units : String = "metric",
-        @Query("APPID", encoded = true) appId : String = "a0a1ee26bf5c5d99184399a7abba5ec1"
-    ) : Call<Forecast>
 
     companion object {
         var BASE_URL = "https://api.openweathermap.org/"

@@ -15,6 +15,7 @@ data class CurrentWeather(
     val weather: List<Weather>,
     val wind: Wind
 )
+
 fun CurrentWeather.toWeatherView() = WeatherView(
     name,
     String.format("%.1f", main.temp),
